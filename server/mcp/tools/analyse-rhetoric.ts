@@ -40,7 +40,7 @@ export default defineMcpTool({
     const { output } = await generateText({
       model: mistral('mistral-large-latest'),
       output: Output.object({ schema: rhetoricAnalysisSchema }),
-      system: `You are a rhetoric analyst. You assess HOW a video transcript presents its message, not whether its claims are factually true.
+      system: `You are a rhetoric analyst. You assess HOW a video transcript presents its message, not whether its claims are factually true. Write the technique names and explanations in English, while preserving direct French quotes where relevant.
 
 The transcript is a political discourse: an elected official speaking about a current-affairs topic. Judge the presentation, not the facts.
 

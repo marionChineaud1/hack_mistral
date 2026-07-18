@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Enquête North — Barbut / Climatisation / BFMTV</title>
+<style>
+  :root {
+    --bg: #0f1117;
+    --surface: #181c27;
+    --surface-2: #1e2335;
+    --border: #2a3050;
+    --text: #e4e8f5;
+    --text-muted: #7a85a8;
+    --text-faint: #4a5270;
+    --accent: #4f7cff;
+    --accent-glow: rgba(79,124,255,.15);
+    --green: #34c88a;
+    --green-bg: rgba(52,200,138,.10);
+    --orange: #f59e0b;
+    --orange-bg: rgba(245,158,11,.10);
+    --red: #f4615c;
+    --red-bg: rgba(244,97,92,.10);
+    --yellow: #fbbf24;
+    --purple: #a78bfa;
+    --purple-bg: rgba(167,139,250,.10);
+    --radius: 10px;
+    --radius-sm: 6px;
+    font-size: 15px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    line-height: 1.65;
+    padding: 32px 16px 80px;
+  }
+
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  .container {
+    max-width: 760px;
+    margin: 0 auto;
+  }
+
+  /* ── Header ─────────────────────────────────── */
+  .header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 36px;
+  }
+  .logo {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: .04em;
+    color: var(--accent);
+  }
+  .logo-dot { color: var(--text-muted); font-weight: 400; }
+  .meta-date {
+    margin-left: auto;
+    font-size: .78rem;
+    color: var(--text-muted);
+  }
+
+  /* ── Claim card ──────────────────────────────── */
+  .claim-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    border-radius: var(--radius);
+    padding: 20px 22px;
+    margin-bottom: 20px;
+  }
+  .claim-label {
+    font-size: .72rem;
+    font-weight: 600;
+    letter-spacing: .09em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+  .claim-quote {
+    font-size: 1.02rem;
+    font-style: italic;
+    color: var(--text);
+    margin-bottom: 12px;
+    border-left: 2px solid var(--border);
+    padding-left: 14px;
+  }
+  .claim-meta {
+    font-size: .8rem;
+    color: var(--text-muted);
+  }
+  .claim-meta strong { color: var(--text); }
+
+  /* ── Verdict hero ────────────────────────────── */
+  .verdict-hero {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px 22px;
+    margin-bottom: 20px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 16px;
+    align-items: start;
+  }
+  .verdict-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    background: var(--orange-bg);
+    border: 1px solid rgba(245,158,11,.35);
+    color: var(--orange);
+    border-radius: 20px;
+    padding: 5px 14px;
+    font-size: .82rem;
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+  .verdict-badge::before { content: "⚠"; font-size: .9em; }
+  .verdict-summary {
+    font-size: .92rem;
+    color: var(--text);
+    line-height: 1.6;
+  }
+  .verdict-summary p + p { margin-top: 8px; }
+
+  /* Confidence meter */
+  .confidence-block {
+    text-align: center;
+    min-width: 100px;
+  }
+  .confidence-label {
+    font-size: .68rem;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+  }
+  .confidence-ring {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 6px;
+  }
+  .confidence-ring svg { transform: rotate(-90deg); }
+  .confidence-ring .track { stroke: var(--border); }
+  .confidence-ring .fill  { stroke: var(--orange); stroke-linecap: round; transition: stroke-dashoffset .6s; }
+  .confidence-value {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--orange);
+  }
+  .confidence-tier {
+    font-size: .72rem;
+    color: var(--text-muted);
+    line-height: 1.3;
+  }
+
+  /* ── Evidence grid ───────────────────────────── */
+  .evidence-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+  @media (max-width: 540px) { .evidence-grid { grid-template-columns: 1fr; } }
+
+  .evidence-col {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px;
+  }
+  .evidence-col.supports { border-top: 2px solid var(--green); }
+  .evidence-col.contradicts { border-top: 2px solid var(--red); }
+
+  .ev-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+    font-size: .78rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .07em;
+  }
+  .ev-header.supports { color: var(--green); }
+  .ev-header.contradicts { color: var(--red); }
+  .ev-dot {
+    width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+  }
+  .ev-dot.green { background: var(--green); }
+  .ev-dot.red   { background: var(--red); }
+
+  .ev-item {
+    font-size: .84rem;
+    color: var(--text);
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+  .ev-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .ev-item .ev-fact { line-height: 1.45; }
+  .ev-item .ev-src  { font-size: .74rem; color: var(--text-muted); }
+
+  /* ── Timeline strip ──────────────────────────── */
+  .timeline-strip {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px 20px;
+    margin-bottom: 20px;
+  }
+  .strip-title {
+    font-size: .72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    color: var(--text-muted);
+    margin-bottom: 14px;
+  }
+  .timeline-row {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    margin-bottom: 12px;
+  }
+  .timeline-row:last-child { margin-bottom: 0; }
+  .tl-dot-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    padding-top: 4px;
+  }
+  .tl-dot {
+    width: 10px; height: 10px; border-radius: 50%;
+    background: var(--accent);
+    flex-shrink: 0;
+  }
+  .tl-line {
+    width: 1px;
+    flex: 1;
+    background: var(--border);
+    min-height: 18px;
+    margin-top: 4px;
+  }
+  .timeline-row:last-child .tl-line { display: none; }
+  .tl-content { flex: 1; }
+  .tl-time { font-size: .72rem; color: var(--accent); font-weight: 600; margin-bottom: 1px; }
+  .tl-desc { font-size: .84rem; color: var(--text); line-height: 1.4; }
+
+  /* ── Unverified pills ────────────────────────── */
+  .unverified-row {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px 20px;
+    margin-bottom: 20px;
+  }
+  .unverified-row .strip-title { margin-bottom: 10px; }
+  .pill-list { display: flex; flex-wrap: wrap; gap: 8px; }
+  .pill {
+    background: var(--purple-bg);
+    border: 1px solid rgba(167,139,250,.25);
+    color: var(--purple);
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: .78rem;
+  }
+
+  /* ── Collapsible sections ────────────────────── */
+  details {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    margin-bottom: 10px;
+    overflow: hidden;
+  }
+  details[open] { border-color: var(--accent); }
+
+  summary {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 18px;
+    cursor: pointer;
+    list-style: none;
+    user-select: none;
+    font-size: .88rem;
+    font-weight: 600;
+    color: var(--text);
+    transition: background .15s;
+  }
+  summary:hover { background: var(--surface-2); }
+  summary::-webkit-details-marker { display: none; }
+
+  .sum-icon {
+    width: 22px; height: 22px;
+    border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: .9rem;
+    flex-shrink: 0;
+  }
+  .sum-icon.blue   { background: var(--accent-glow); color: var(--accent); }
+  .sum-icon.green  { background: var(--green-bg);    color: var(--green); }
+  .sum-icon.red    { background: var(--red-bg);      color: var(--red); }
+  .sum-icon.orange { background: var(--orange-bg);   color: var(--orange); }
+  .sum-icon.purple { background: var(--purple-bg);   color: var(--purple); }
+
+  .sum-chevron {
+    margin-left: auto;
+    color: var(--text-faint);
+    font-size: .75rem;
+    transition: transform .2s;
+  }
+  details[open] .sum-chevron { transform: rotate(90deg); }
+
+  .detail-body {
+    padding: 0 18px 18px;
+    font-size: .86rem;
+    color: var(--text);
+    line-height: 1.65;
+  }
+  .detail-body p + p { margin-top: 10px; }
+  .detail-body ul { padding-left: 18px; }
+  .detail-body li { margin-bottom: 7px; }
+  .detail-body strong { color: var(--text); }
+  .detail-body em { color: var(--text-muted); font-style: normal; }
+  .detail-body .tag-primary {
+    display: inline-block;
+    font-size: .68rem;
+    background: var(--accent-glow);
+    color: var(--accent);
+    border-radius: 4px;
+    padding: 1px 6px;
+    margin-left: 4px;
+    vertical-align: middle;
+  }
+  .detail-body .tag-secondary {
+    display: inline-block;
+    font-size: .68rem;
+    background: var(--surface-2);
+    color: var(--text-muted);
+    border-radius: 4px;
+    padding: 1px 6px;
+    margin-left: 4px;
+    vertical-align: middle;
+  }
+  .detail-body hr {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 14px 0;
+  }
+
+  /* framing list */
+  .framing-item {
+    background: var(--surface-2);
+    border-radius: var(--radius-sm);
+    padding: 10px 13px;
+    margin-bottom: 8px;
+  }
+  .framing-item .framing-label {
+    font-size: .72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .07em;
+    color: var(--red);
+    margin-bottom: 4px;
+  }
+
+  /* source list */
+  .source-item {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: .83rem;
+  }
+  .source-item:last-child { border-bottom: none; }
+  .source-type {
+    flex-shrink: 0;
+    font-size: .68rem;
+    font-weight: 700;
+    border-radius: 4px;
+    padding: 2px 7px;
+  }
+  .source-type.primary   { background: var(--accent-glow); color: var(--accent); }
+  .source-type.secondary { background: var(--surface-2);   color: var(--text-muted); }
+
+  /* modifier list */
+  .modifier-item {
+    display: flex;
+    gap: 10px;
+    padding: 9px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: .84rem;
+    align-items: flex-start;
+  }
+  .modifier-item:last-child { border-bottom: none; }
+  .modifier-num {
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    background: var(--surface-2);
+    display: flex; align-items: center; justify-content: center;
+    font-size: .72rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  /* follow-up */
+  .followup-box {
+    background: var(--green-bg);
+    border: 1px solid rgba(52,200,138,.25);
+    border-radius: var(--radius);
+    padding: 14px 16px;
+    margin-top: 24px;
+    font-size: .84rem;
+  }
+  .followup-box .fu-label {
+    font-size: .72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    color: var(--green);
+    margin-bottom: 6px;
+  }
+  .followup-box p { color: var(--text); }
+
+  /* section title for grouping */
+  .section-group-title {
+    font-size: .7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .1em;
+    color: var(--text-faint);
+    margin: 28px 0 10px;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- Header -->
+  <div class="header">
+    <span class="logo">North<span class="logo-dot"> · Enquête</span></span>
+    <span class="meta-date">26 juin 2026 — BFMTV</span>
+  </div>
+
+  <!-- Claim card -->
+  <div class="claim-card">
+    <div class="claim-label">Affirmation soumise</div>
+    <div class="claim-quote">
+      « Je suis horrifiée par les gens qui me disent qu'il n'y a qu'à mettre la clim' partout (…)
+      Vous croyez que ça va éviter un feu de forêt, la mort des animaux ?
+      Ça n'est pas de l'adaptation, c'est une mesure d'urgence. »
+    </div>
+    <div class="claim-meta">
+      <strong>Monique Barbut</strong>, ministre de la Transition écologique &nbsp;·&nbsp;
+      <strong>BFMTV</strong> &nbsp;·&nbsp; 26 juin 2026 &nbsp;·&nbsp; 2,6 M de vues sur X
+    </div>
+  </div>
+
+  <!-- Verdict hero -->
+  <div class="verdict-hero">
+    <div>
+      <div class="verdict-badge">Affirmation partiellement étayée, mais trompeuse par omission</div>
+      <div class="verdict-summary">
+        <p>Les propos sont <strong>authentiques</strong> et le statut de ministre est <strong>confirmé</strong>.
+        Mais l'affirmation que la climatisation ne sert à rien est <strong>réductrice</strong> : elle réduit
+        significativement la mortalité humaine lors des canicules, un fait omis par la déclaration.</p>
+        <p>En revanche, la climatisation n'a <strong>aucun effet direct</strong> sur les feux de forêt ou
+        la mort des animaux sauvages — l'argument créant une <strong>fausse dichotomie</strong>
+        entre mesure d'urgence et adaptation à long terme.</p>
+      </div>
+    </div>
+    <div class="confidence-block">
+      <div class="confidence-label">Confiance</div>
+      <div class="confidence-ring">
+        <svg width="80" height="80" viewBox="0 0 80 80">
+          <circle class="track" cx="40" cy="40" r="32" fill="none" stroke-width="7"/>
+          <!-- 65% of 2π×32 ≈ 130.5 ; total circumference ≈ 201 -->
+          <circle class="fill" cx="40" cy="40" r="32" fill="none" stroke-width="7"
+            stroke-dasharray="201" stroke-dashoffset="70"/>
+        </svg>
+        <div class="confidence-value">65%</div>
+      </div>
+      <div class="confidence-tier">Modérée<br>sources cohérentes<br>contexte partiel</div>
+    </div>
+  </div>
+
+  <!-- Evidence grid -->
+  <div class="evidence-grid">
+    <div class="evidence-col supports">
+      <div class="ev-header supports">
+        <div class="ev-dot green"></div> Soutient l'affirmation
+      </div>
+      <div class="ev-item">
+        <span class="ev-fact">Déclaration authentique, diffusée sur BFMTV le 26 juin 2026.</span>
+        <span class="ev-src"><a href="https://www.bfmtv.com/politique/video-je-suis-horrifiee-par-les-gens-qui-me-disent-qu-il-n-y-a-qu-a-mettre-la-clim-partout-vous-croyez-que-ca-va-eviter-un-feu-de-foret-la-mort-des-animaux-lance-la-ministre-monique-barbut_VN-202606260322.html">BFMTV</a> · primaire</span>
+      </div>
+      <div class="ev-item">
+        <span class="ev-fact">Statut de ministre de la Transition écologique confirmé depuis oct. 2025.</span>
+        <span class="ev-src"><a href="https://www.info.gouv.fr/personnalite/monique-barbut">info.gouv.fr</a> · primaire</span>
+      </div>
+      <div class="ev-item">
+        <span class="ev-fact">La climatisation n'a aucun effet direct sur les feux de forêt — consensus implicite dans la littérature climatique.</span>
+        <span class="ev-src">Consensus scientifique · non sourcé directement</span>
+      </div>
+    </div>
+    <div class="evidence-col contradicts">
+      <div class="ev-header contradicts">
+        <div class="ev-dot red"></div> Nuance ou contredit
+      </div>
+      <div class="ev-item">
+        <span class="ev-fact">La climatisation réduit la mortalité humaine jusqu'à −80 % lors des canicules (données US). Paris, mal équipée, présente le taux le plus élevé d'Europe.</span>
+        <span class="ev-src"><a href="https://sciencepost.fr/refuser-la-climatisation-au-nom-de-l-ecologie-tue-plus-de-gens-que-la-canicule-elle-meme/">SciencePost</a> · secondaire</span>
+      </div>
+      <div class="ev-item">
+        <span class="ev-fact">Fausse dichotomie : climatisation (urgence) et adaptation (long terme) ne s'excluent pas — le GIEC recommande une approche équilibrée.</span>
+        <span class="ev-src"><a href="https://www.franceinfo.fr/environnement/crise-climatique/que-dit-le-giec-sur-les-effets-potentiels-de-la-climatisation-outil-tres-discute-contre-les-fortes-chaleurs-dans-un-contexte-de-rechauffement-climatique_8093621.html">France Info / GIEC</a> · secondaire</span>
+      </div>
+      <div class="ev-item">
+        <span class="ev-fact">Personne ne suggère la clim' comme solution aux feux de forêt — argument « paille » possible.</span>
+        <span class="ev-src"><a href="https://www.21news.be/je-suis-horrifiee-par-les-gens-qui-me-disent-quil-ny-a-qua-mettre-la-clim-partout-la-sortie-de-monique-barbut-qui-fait-polemique/">21 News</a> · secondaire</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Timeline strip -->
+  <div class="timeline-strip">
+    <div class="strip-title">Chronologie</div>
+    <div class="timeline-row">
+      <div class="tl-dot-col"><div class="tl-dot"></div><div class="tl-line"></div></div>
+      <div class="tl-content">
+        <div class="tl-time">26 juin 2026 · matin</div>
+        <div class="tl-desc">Barbut s'exprime sur BFMTV — canicule en cours, ~1 500–2 600 décès estimés.</div>
+      </div>
+    </div>
+    <div class="timeline-row">
+      <div class="tl-dot-col"><div class="tl-dot"></div><div class="tl-line"></div></div>
+      <div class="tl-content">
+        <div class="tl-time">26 juin 2026 · journée</div>
+        <div class="tl-desc">Post X de @BFMTV → 2,6 M de vues. Community Notes ajoutées avec données Our World in Data / Le Parisien.</div>
+      </div>
+    </div>
+    <div class="timeline-row">
+      <div class="tl-dot-col"><div class="tl-dot"></div><div class="tl-line"></div></div>
+      <div class="tl-content">
+        <div class="tl-time">26 juin 2026 · soir</div>
+        <div class="tl-desc">Polémique : RTL, Orange Actu, Morandini. Réactions d'élus locaux (maire de Cannes, opposition).</div>
+      </div>
+    </div>
+    <div class="timeline-row">
+      <div class="tl-dot-col"><div class="tl-dot"></div></div>
+      <div class="tl-content">
+        <div class="tl-time">Maillon manquant</div>
+        <div class="tl-desc">Transcription complète de l'interview absente — contexte exact de la déclaration non confirmé.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Unverified -->
+  <div class="unverified-row">
+    <div class="strip-title">Éléments non vérifiés</div>
+    <div class="pill-list">
+      <span class="pill">Contexte exact de la question posée à Barbut</span>
+      <span class="pill">Impact de la clim' sur la mort des animaux</span>
+      <span class="pill">Transcription complète de l'interview</span>
+      <span class="pill">Source de la suggestion "clim' partout"</span>
+    </div>
+  </div>
+
+  <!-- Collapsible secondary sections -->
+  <div class="section-group-title">Détails de l'enquête</div>
+
+  <details>
+    <summary>
+      <span class="sum-icon orange">⚠</span>
+      Analyse du cadrage rhétorique
+      <span class="sum-chevron">▶</span>
+    </summary>
+    <div class="detail-body">
+      <div class="framing-item">
+        <div class="framing-label">Langage émotionnel</div>
+        <p>« Je suis horrifiée » — formulation forte qui polarise le débat et invite à l'identification émotionnelle plutôt qu'à l'analyse.</p>
+      </div>
+      <div class="framing-item">
+        <div class="framing-label">Question rhétorique</div>
+        <p>« Vous croyez que ça va éviter… ? » — sous-entend une réponse négative sans démonstration, contournant la nuance.</p>
+      </div>
+      <div class="framing-item">
+        <div class="framing-label">Fausse dichotomie</div>
+        <p>Opposer climatisation (urgence) et adaptation (long terme) est réducteur : les deux approches sont complémentaires selon le GIEC et la littérature scientifique.</p>
+      </div>
+      <div class="framing-item">
+        <div class="framing-label">Certitude affichée sans nuance</div>
+        <p>« Ça n'est pas de l'adaptation » — présenté comme un fait établi, alors que des experts et le GIEC reconnaissent la climatisation comme un outil d'adaptation sous conditions.</p>
+      </div>
+      <div class="framing-item">
+        <div class="framing-label">Omission significative</div>
+        <p>Aucune mention des bénéfices avérés sur la mortalité humaine lors des canicules, ni des inégalités d'accès à cette technologie.</p>
+      </div>
+      <hr>
+      <p><em>Cette analyse porte sur la présentation du contenu, non sur la véracité globale de l'affirmation ni sur l'intention de son auteur.</em></p>
+    </div>
+  </details>
+
+  <details>
+    <summary>
+      <span class="sum-icon blue">📋</span>
+      Contexte manquant
+      <span class="sum-chevron">▶</span>
+    </summary>
+    <div class="detail-body">
+      <ul>
+        <li><strong>Approche d'adaptation globale :</strong> la climatisation est une solution parmi d'autres (végétalisation, îlots de fraîcheur, isolation). Barbut semble les opposer alors qu'elles sont complémentaires — <a href="https://aoc.media/analyse/2026/07/12/pour-un-modele-dadaptation-collectif-face-aux-canicules/">AOC Media</a>.</li>
+        <li><strong>Données de mortalité 2026 :</strong> 1 500 à 2 600 décès estimés lors de la canicule de juin 2026, surmortalité accrue à Paris — <a href="https://www.meteocontact.fr/actualite-meteo/01/07/2026/canicule-en-france-jusqua-1-500-deces-estimes-selon-ces-modelisations/">Météo Contact</a>.</li>
+        <li><strong>Populations vulnérables :</strong> les personnes âgées et précaires (sans climatisation) sont les plus touchées — <a href="https://www.bonjoursenior.fr/actualites/canicule-de-juin-2026-pourquoi-la-surmortalite-continue-de-saggraver">Bonjour Senior</a>.</li>
+        <li><strong>Position du GIEC :</strong> recommande une approche équilibrée — la climatisation peut être nécessaire pour les populations vulnérables, à condition d'être couplée à une transition énergétique — <a href="https://www.franceinfo.fr/environnement/crise-climatique/que-dit-le-giec-sur-les-effets-potentiels-de-la-climatisation-outil-tres-discute-contre-les-fortes-chaleurs-dans-un-contexte-de-rechauffement-climatique_8093621.html">France Info</a>.</li>
+        <li><strong>Débat politique :</strong> opposition et élus locaux défendent la climatisation dans hôpitaux et écoles — <a href="https://actu.orange.fr/politique/canicule-les-politiques-vent-debout-apres-les-propos-de-la-ministre-de-la-transition-ecologique-sur-la-climatisation-magic-CNT000002qc5lP.html">Orange Actu</a>.</li>
+      </ul>
+    </div>
+  </details>
+
+  <details>
+    <summary>
+      <span class="sum-icon green">📎</span>
+      Sources complètes
+      <span class="sum-chevron">▶</span>
+    </summary>
+    <div class="detail-body">
+      <div class="source-item">
+        <span class="source-type primary">Primaire</span>
+        <span><a href="https://www.bfmtv.com/politique/video-je-suis-horrifiee-par-les-gens-qui-me-disent-qu-il-n-y-a-qu-a-mettre-la-clim-partout-vous-croyez-que-ca-va-eviter-un-feu-de-foret-la-mort-des-animaux-lance-la-ministre-monique-barbut_VN-202606260322.html">BFMTV</a> — Déclaration originale de Barbut, vidéo et article.</span>
+      </div>
+      <div class="source-item">
+        <span class="source-type primary">Primaire</span>
+        <span><a href="https://www.info.gouv.fr/personnalite/monique-barbut">info.gouv.fr</a> — Statut officiel de Monique Barbut.</span>
+      </div>
+      <div class="source-item">
+        <span class="source-type primary">Primaire</span>
+        <span><a href="https://www.elysee.fr/emmanuel-macron/2026/02/26/nomination-du-gouvernement-7">Élysée</a> — Composition du gouvernement, nomination oct. 2025.</span>
+      </div>
+      <div class="source-item">
+        <span class="source-type secondary">Secondaire</span>
+        <span><a href="https://www.rtl.fr/actu/politique/vous-croyez-que-ca-va-eviter-quoi-interrogee-sur-la-climatisation-et-la-canicule-la-ministre-de-la-transition-ecologique-se-dit-horrifiee-7900650053">RTL</a> — Réaction à la déclaration.</span>
+      </div>
+      <div class="source-item">
+        <span class="source-type secondary">Secondaire</span>
+        <span><a href="https://sciencepost.fr/refuser-la-climatisation-au-nom-de-l-ecologie-tue-plus-de-gens-que-la-canicule-elle-meme/">SciencePost</a> — Impact de la climatisation sur la mortalité (études épidémiologiques).</span>
+      </div>
+      <div class="source-item">
+        <span class="source-type secondary">Secondaire</span>
+        <span><a href="https://www.21news.be/je-suis-horrifiee-par-les-gens-qui-me-disent-quil-ny-a-qua-mettre-la-clim-partout-la-sortie-de-monique-barbut-qui-fait-polemique/">21 News</a> — Analyse de la polémique, argument "paille".</span>
+      </div>
+      <div class="source-item">
+        <span class="source-type secondary">Secondaire</span>
+        <span><a href="https://www.franceinfo.fr/environnement/crise-climatique/que-dit-le-giec-sur-les-effets-potentiels-de-la-climatisation-outil-tres-discute-contre-les-fortes-chaleurs-dans-un-contexte-de-rechauffement-climatique_8093621.html">France Info</a> — Position du GIEC sur la climatisation.</span>
+      </div>
+      <div class="source-item">
+        <span class="source-type secondary">Secondaire</span>
+        <span><a href="https://actu.orange.fr/politique/canicule-les-politiques-vent-debout-apres-les-propos-de-la-ministre-de-la-transition-ecologique-sur-la-climatisation-magic-CNT000002qc5lP.html">Orange Actu</a> — Réactions politiques.</span>
+      </div>
+      <div class="source-item">
+        <span class="source-type secondary">Secondaire</span>
+        <span><a href="https://aoc.media/analyse/2026/07/12/pour-un-modele-dadaptation-collectif-face-aux-canicules/">AOC Media</a> — Modèles d'adaptation climatique collective.</span>
+      </div>
+    </div>
+  </details>
+
+  <details>
+    <summary>
+      <span class="sum-icon red">🔄</span>
+      Ce qui pourrait modifier la conclusion
+      <span class="sum-chevron">▶</span>
+    </summary>
+    <div class="detail-body">
+      <div class="modifier-item">
+        <div class="modifier-num">1</div>
+        <div><strong>Transcription complète de l'interview</strong> — vérifier si Barbut répondait à une proposition spécifique ou généralisait un débat, ce qui changerait le caractère équitable ou non de l'argument.</div>
+      </div>
+      <div class="modifier-item">
+        <div class="modifier-num">2</div>
+        <div><strong>Étude sur l'impact de la climatisation sur la mort des animaux</strong> — actuellement non documenté, ce point reste ouvert.</div>
+      </div>
+      <div class="modifier-item">
+        <div class="modifier-num">3</div>
+        <div><strong>Clarification officielle du ministère</strong> — si Barbut précise sa position sur le rôle de la climatisation dans une stratégie d'adaptation globale, la conclusion pourrait être revue à la hausse.</div>
+      </div>
+      <div class="modifier-item">
+        <div class="modifier-num">4</div>
+        <div><strong>Données actualisées sur la canicule 2026</strong> — affiner l'estimation de surmortalité et son lien avec l'absence de climatisation renforcerait ou affaiblirait le contre-argument scientifique.</div>
+      </div>
+    </div>
+  </details>
+
+  <!-- Follow-up -->
+  <div class="followup-box">
+    <div class="fu-label">📅 Tâche de suivi suggérée</div>
+    <p>Surveiller les déclarations officielles de Monique Barbut ou du ministère de la Transition écologique sur la climatisation d'ici fin juillet 2026, en cas de nouvelle vague de chaleur ou de polémique.<br>
+    <strong>Fréquence :</strong> quotidienne en cas de canicule, sinon hebdomadaire.</p>
+  </div>
+
+</div>
+</body>
+</html>

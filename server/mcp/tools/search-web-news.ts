@@ -91,7 +91,7 @@ function hostnameOf(url: string): string {
 
 export default defineMcpTool({
   description:
-    'Searches the live web and news for sources related to a target video\'s content, using Mistral\'s built-in '
+    'Searches French-language live web and news sources related to a target video\'s content, using Mistral\'s built-in '
     + 'web_search connector. Returns structured, cited results (title, publisher, URL, retrieval timestamp), each '
     + 'with a short summary of the page content and a relevance score, ranked most relevant first.',
   inputSchema: {
@@ -116,7 +116,7 @@ export default defineMcpTool({
     // Step 1: search the web via Mistral's native web_search connector.
     const searchPrompt = [
       'Identify the main claim or topic in the following content, then search the web and news for sources',
-      'that corroborate or contradict it. Use the web_search tool.',
+      'that corroborate or contradict it. Use the web_search tool. Search French-language sources only.',
       '',
       '---',
       content,
@@ -172,7 +172,7 @@ export default defineMcpTool({
     // Reusing the conversation means the model still has what it actually retrieved during the search.
     const summarizePrompt = [
       'For each of the following sources you just found, write a short summary (1 to 5 lines) of what the',
-      'page actually says, and a relevance score (0 to 1) against the original claim below.',
+      'page actually says in English, and a relevance score (0 to 1) against the original claim below.',
       'Respond with ONLY a JSON object matching this shape, no other text:',
       '{"sources":[{"url":"...","summary":"...","relevance":0.0}]}',
       '',

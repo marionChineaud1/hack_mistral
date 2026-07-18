@@ -4,6 +4,8 @@
   "private": true,
   "scripts": {
     "build": "nuxt build",
+    "db:generate": "nuxt db generate",
+    "db:migrate": "nuxt db migrate",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
@@ -12,16 +14,24 @@
   },
   "dependencies": {
     "@ai-sdk/mistral": "^4.0.12",
-    "ai": "^7.0.30",
-    "h3": "^1.15.11",
     "@ai-sdk/openai": "^4.0.16",
+    "@libsql/client": "^0.17.4",
+    "@nuxthub/core": "0.10.8",
     "@nuxtjs/mcp-toolkit": "^0.18.0",
+    "ai": "^7.0.30",
+    "drizzle-kit": "^0.31.10",
+    "drizzle-orm": "^0.45.2",
+    "embla-carousel-vue": "^8.6.0",
+    "h3": "^1.15.11",
     "nuxt": "^4.4.8",
     "vue": "^3.5.39",
     "vue-router": "^5.1.0",
     "zod": "^4.4.3"
   },
   "devDependencies": {
+    "@nuxt/fonts": "^0.14.0",
+    "@nuxt/icon": "^2.3.1",
+    "@nuxtjs/tailwindcss": "^6.14.0",
     "vitest": "^4.1.10"
   },
   "packageManager": "pnpm@11.14.0+sha512.66c1ac4c7d4762d6d7dde44c7f3e5a73591ed0a0806e751d4ed32d4f004f25b2285a906b1fd8a9e3e621df3b4e2858bf88e50e0cf626bedbe977fe434a5caf85"

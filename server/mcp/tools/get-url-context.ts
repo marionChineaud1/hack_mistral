@@ -70,7 +70,7 @@ function parseWorkerResponse(body: string): z.infer<typeof xPostContext> {
 }
 
 export default defineMcpTool({
-  description: `Retrieve live, browser-rendered context for a public HTTP(S) URL. This is North's generic URL-context entry point: it is named for future support of multiple web sources, but the current browser worker supports X post URLs only. For a supported X post, it returns the canonical URL, parsed post text and author metadata, publication date, engagement metrics when available, rendered Markdown context, Community Note URL when detected, video references, and an available video transcription. Use this before investigating a submitted post; do not assume that a video asset or transcription exists.`,
+  description: `Retrieve live, browser-rendered context for a public HTTP(S) URL. This is Vera's generic URL-context entry point: it is named for future support of multiple web sources, but the current browser worker supports X post URLs only. For a supported X post, it returns the canonical URL, parsed post text and author metadata, publication date, engagement metrics when available, rendered Markdown context, Community Note URL when detected, video references, and an available video transcription. Use this before investigating a submitted post; do not assume that a video asset or transcription exists.`,
   inputSchema: {
     url: httpUrl,
   },
