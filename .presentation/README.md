@@ -33,3 +33,7 @@ Vera is an AI investigative assistant. It does not decide what people should thi
 - Use a supported X post URL with a stable, explainable claim.
 - Have the public report route open as a fallback.
 - If a live dependency fails, state that Vera does not substitute mock evidence or fabricate a report link.
+
+## Demo video
+
+Use [06-demo-video.md](./06-demo-video.md) for a 90-second hybrid recording plan, shot list, on-screen captions, and final voice-over script.
