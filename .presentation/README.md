@@ -15,7 +15,7 @@ Vera is an AI investigative assistant. It does not decide what people should thi
 | 0:00 | Start the live demo | [04-live-demo.md](./04-live-demo.md) | Paste the post URL immediately, then let the investigation run. |
 | 0:00–0:15 | Problem and solution | [01-problem-and-solution.md](./01-problem-and-solution.md) | Establish the need for context while extraction begins. |
 | 0:15–0:45 | Specialised investigator | [02-specialised-agent.md](./02-specialised-agent.md) | Explain the visible investigative responsibilities while live research runs. |
-| 0:45–1:05 | More than a Skill | [03-why-not-just-a-skill.md](./03-why-not-just-a-skill.md) | Explain the product and architecture boundary while results are synthesised. |
+| 0:45–1:05 | Mistral Vibe UI and connections | [03-why-not-just-a-skill.md](./03-why-not-just-a-skill.md) | Explain what we built in Vibe and how it connects to the investigation system. |
 | 1:05–1:45 | Reveal the demo result | [04-live-demo.md](./04-live-demo.md) | Show the concise result and public evidence report. |
 | 1:45–2:00 | Closing | [05-closing.md](./05-closing.md) | Reinforce transparent uncertainty. |
 
