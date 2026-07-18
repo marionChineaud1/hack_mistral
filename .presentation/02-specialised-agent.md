@@ -1,6 +1,6 @@
 # 2. The specialised investigator
 
-**Time:** 30 seconds
+**Time:** 0:15–0:45, while live research runs
 
 ## Slide content
 
@@ -17,7 +17,7 @@
 
 ## Speaker notes
 
-“North is a specialised investigator for viral information. It does not jump to a verdict. It first turns the post into verifiable claims, traces the origin, looks for institutional evidence, and checks the missing context.
+“Vera is a specialised investigator for viral information. It does not jump to a verdict. While the live investigation runs, it turns the post into verifiable claims, traces the origin, looks for institutional evidence, and checks the missing context.
 
 It then analyses rhetoric separately: wording, certainty, emotional framing, and omissions. That is an analysis of the content, not a judgement about the author’s intention.
 
@@ -29,4 +29,4 @@ Finally, it reconciles supporting and contradictory evidence, names its limitati
 
 ## Transition
 
-“This workflow is guided by a Skill, but North is deliberately more than a Skill.”
+“This workflow is guided by a Skill, but Vera is deliberately more than a Skill.”

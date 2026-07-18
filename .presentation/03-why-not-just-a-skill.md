@@ -1,10 +1,10 @@
-# 3. Why North is not just a Skill
+# 3. Why Vera is not just a Skill
 
-**Time:** 20 seconds
+**Time:** 0:45–1:05, while the investigation is synthesised
 
 ## Slide content
 
-### A Skill is the playbook. North is the investigation system.
+### A Skill is the playbook. Vera is the investigation system.
 
 | Layer | Role |
 | --- | --- |
@@ -15,16 +15,16 @@
 
 ## Speaker notes
 
-“The Skill is North’s investigative playbook. It decides the sequence, evidence policy, and final response shape.
+“The Skill is Vera’s investigative playbook. It decides the sequence, evidence policy, and final response shape.
 
-But a Skill alone is ephemeral and conversation-bound. North needs live retrieval to investigate the current world, structured persistence to preserve citations and uncertainty, and a public report that can be inspected independently of the Vibe conversation.
+But a Skill alone is ephemeral and conversation-bound. Vera needs live retrieval to investigate the current world, structured persistence to preserve citations and uncertainty, and a public report that can be inspected independently of the Vibe conversation.
 
-The Skill orchestrates the work. North makes the work reliable, durable, and auditable.”
+The Skill orchestrates the work. Vera makes the work reliable, durable, and auditable.”
 
 ## Short version
 
-“A Skill can reason over a conversation. North turns that reasoning into a real investigation: live sources in, structured evidence saved, and a public report out.”
+“A Skill can reason over a conversation. Vera turns that reasoning into a real investigation: live sources in, structured evidence saved, and a public report out.”
 
 ## Transition
 
-“Let’s show that flow on a real post.”
+“Now let’s return to the live investigation.”
