@@ -2,20 +2,11 @@
 
 ## The problem
 
-Viral information often reaches people without the source, chronology, evidence, or context needed to interpret it. A simple “true or false” answer is not enough: it hides uncertainty and does not teach users how a claim is constructed.
+Viral information often reaches people without the source, chronology, evidence, or context needed to interpret it. A binary “true or false” answer hides uncertainty and does not teach users how a claim was constructed.
 
 ## Positioning
 
-**North** is an **AI investigative journalist**, not an AI fact-checker.
-
-It investigates a submitted claim and helps the user decide what to think by showing:
-
-- where the information originated;
-- how it propagated;
-- what supports or contradicts it;
-- what context is absent;
-- how the wording tries to persuade the reader;
-- how confident the investigation can be, and why.
+**North** is an **AI investigative assistant**, not an authority that decides the truth. It helps users decide what to think by showing where information originated, what supports or contradicts it, what remains unknown, which context is absent, and how confidently the available evidence can be interpreted.
 
 **Core message:** Every viral post deserves an investigation before it deserves your attention.
 
@@ -23,58 +14,29 @@ It investigates a submitted claim and helps the user decide what to think by sho
 
 ### Evidence, not authority
 
-The product must expose its sources and reasoning. A confidence value is useful only when the evidence behind it is visible.
+North exposes sources, limitations, and reasoning. Confidence is explained through evidence quality, independence, coherence, and missing information, never an unexplained percentage.
 
 ### Uncertainty is a feature
 
-Avoid binary verdicts wherever the evidence is incomplete. Prefer outcomes such as:
+North uses nuanced labels such as **Fortement étayé**, **Sources contradictoires**, **Trop tôt pour conclure**, or **Preuves insuffisantes**. It separates sourced facts, cautious interpretation, and unverified elements.
 
-- Highly supported
-- Weak evidence
-- Conflicting reports
-- Too early to conclude
-- Likely satire
-- Original source unavailable
+### Factual and rhetorical context
 
-### Two independent dimensions
+The investigation considers two independent dimensions:
 
-The product evaluates both:
+1. whether reliable evidence supports the claim;
+2. whether the content presents its message fairly through its wording, omissions, certainty, and emotional framing.
 
-1. **Factual quality:** Is the claim supported by reliable evidence?
-2. **Argumentative quality:** Is the content presented fairly, or is it using misleading framing or rhetoric?
+Rhetorical analysis evaluates the content, not the author’s personality or intentions.
 
-A statement may be factually accurate while still being manipulative or incomplete.
+### Live sources and durable transparency
 
-### User agency
+Research uses live extraction and live sources only. A completed investigation is then saved as structured records, with source-to-finding citations, so it can be reconstructed without chat history or MCP logs.
 
-The system does not decide the user’s opinion. It gathers evidence, makes gaps explicit, and enables a better-informed conclusion.
+## MVP experience
 
-### Scope for the hackathon
+The user submits an X post URL in Mistral Vibe. Brief statuses make the investigation visible while North extracts the post, searches the web and institutions, compares evidence, and analyses framing. North then saves the complete investigation through `save_investigation`.
 
-The initial user journey accepts an **X post URL** and returns a contextualised answer in Mistral Vibe. Other formats remain future extensions, not MVP promises.
+Vibe displays only a cautious conclusion, one decisive cited finding, and a link. The companion Nuxt application renders the durable, detailed public investigation: claim components, conclusion, confidence, evidence groups, chronology, missing context, rhetoric, sources, change factors, and optional follow-up.
 
-## Distinctive experience
-
-Instead of immediately returning an answer, show a **live investigation**. Visible specialist agents make the product feel concrete and agentic:
-
-- searching for official statements;
-- tracing the first appearance of the claim;
-- comparing headlines and sources;
-- finding missing context;
-- building a timeline and evidence graph.
-
-The output should feel like a short detective report, not a chatbot response.
-
-## Core investigation report
-
-A final report should include:
-
-1. **Claim received**
-2. **Verdict and confidence**, with a clear uncertainty label
-3. **Why the system reached this conclusion**
-4. **Origin map and timeline**
-5. **Supporting, contradicting, and unverified evidence**
-6. **Missing context**
-7. **Rhetorical analysis and manipulation risk**
-8. **What would change this conclusion**
-9. **Citations to primary and institutional sources**
+This division keeps the live-agent experience concise while preserving full transparency in the public report.

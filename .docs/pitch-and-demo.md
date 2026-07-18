@@ -2,64 +2,39 @@
 
 ## Jury narrative
 
-The project addresses **information without context**. Viral posts can spread faster than the evidence needed to understand them.
+North addresses **information without context**. Viral posts spread faster than the evidence needed to understand them.
 
-Do not present it as “another AI fact-checker.” Present it as:
-
-> The first AI investigative journalist.
-
-Or:
+Do not present North as another infallible fact-checker. Present it as an investigative assistant:
 
 > Every viral post deserves an investigation before it deserves your attention.
 
-The key differentiator is that the product does not issue unexplained verdicts. It builds a transparent investigation: origin, evidence, missing context, rhetoric, uncertainty, and citations.
+North makes the investigation visible, saves the evidence trail, and lets the audience inspect the complete report rather than asking them to trust a chat answer.
 
 ## Suggested short pitch
 
-> People encounter viral claims before they encounter the context needed to judge them. North turns an X post into a transparent investigation. Instead of telling users what to think, specialised agents trace the origin, consult institutional sources, recover missing context, analyse framing, and build an evidence graph. The final report shows not only what we know, but also what could change the conclusion. It makes information literacy concrete, fast, and accessible.
+> People encounter viral claims before they encounter the context needed to judge them. North turns an X post into a transparent investigation. In Mistral Vibe, specialised tools trace the origin, consult institutional sources, recover missing context, and analyse framing. North then saves the structured evidence and returns a concise conclusion with a link to a public Nuxt report showing what we know, what remains uncertain, and what could change the conclusion.
 
 ## Suggested two-minute demo
 
-1. **Start with the live X post**
-   - Primary scenario: [BFM’s post](https://x.com/BFMTV/status/2070421512050364493?s=20) quoting Minister Monique Barbut on air conditioning and climate adaptation.
-   - The post has a Community Note that adds a distinct health and heat-mortality perspective. It is ideal for showing that North adds context rather than declaring an absolute truth.
+1. **Submit the live X post in Mistral Vibe.** Show that the supported URL is extracted live, including its canonical URL and available media/transcription state.
+2. **Show brief investigation statuses.** Let the jury see origin research, institutional verification, independent-source comparison, missing-context research, and rhetoric analysis without exposing a premature verdict.
+3. **Show the live tools.** Highlight the distinction between the original post, Community Note, primary evidence, institutional material, and contextual reporting.
+4. **Show persistence.** Display the “Enregistrement de l’enquête détaillée” status and the `save_investigation` call after synthesis.
+5. **Reveal the concise Vibe result.** It contains no more than three French bullets: cautious conclusion, one decisive cited finding, and the returned **Consulter l’enquête complète** link.
+6. **Open the Nuxt report.** Demonstrate that the database-backed page contains the full claim breakdown, confidence, evidence groups, chronology, missing context, rhetoric, sources, uncertainties, and possible follow-up.
+7. **Close with honest uncertainty.** Point to “what could change this conclusion” rather than claiming North owns the truth.
 
-2. **Show the Planner deciding how to investigate**
-   - It identifies French environmental and public-health context and launches the Source Hunter, Institutional Evidence, and Context agents.
+## Failure demo behavior
 
-3. **Show the investigation in motion**
-   - Agent cards visibly search sources and update their outputs.
-   - Reveal the first publication, repost chain, and official documents.
-
-4. **Reveal the missing context and rhetorical analysis**
-   - Explain, for example, that a headline confuses a proposal with a law, drops key exceptions, or uses alarmist wording.
-
-5. **Show the Evidence Graph and final conclusion**
-   - Use a nuanced verdict such as “Misleading” rather than “False.”
-   - Explain confidence through the evidence.
-
-6. **Close with uncertainty**
-   - “Our conclusion would change if an implementing decree were published in the Journal Officiel.”
-   - This demonstrates honest, agentic reasoning rather than overconfident AI.
-
-## Demonstration scenarios
-
-| Claim | What it can demonstrate |
-| --- | --- |
-| BFM post on air conditioning and adaptation | A nuanced, live demonstration of competing climate and public-health considerations, Community-Note context, and careful rhetoric analysis. |
-| “France bans Linux in public administration.” | Origin tracing, institutional evidence, legal nuance, proposal-versus-law distinction. |
-| “The European Union bans combustion engines.” | Missing exceptions, dates, policy context, framing. |
-| “NASA confirms alien life.” | Headline exaggeration, scientific uncertainty, primary-paper comparison. |
-| “Crime rose 30% in this city.” | Time-period omission, baseline comparison, alarmist rhetorical framing. |
-
-## Working name
-
-The project’s working name is **North**. It suggests orientation through uncertain information without implying that the product owns the truth.
+- Extraction failure produces a helpful French explanation and no saved investigation.
+- Validation failure triggers one structured-payload repair, not repeated research.
+- Persistence failure is disclosed in at most three bullets and never produces a fabricated or reconstructed report URL.
+- Live source failure remains visible; no mock source or example report is substituted.
 
 ## Presentation guidance
 
-- Treat visible orchestration as a product feature: the jury should see specialist agents working together.
-- Use diagrams and status updates, not a wall of generated text.
-- Make the evidence path clickable and cite sources.
-- Emphasise the distinction between factual accuracy and argumentative honesty.
-- Avoid presenting the model as an infallible authority; transparent uncertainty is more credible and more distinctive.
+- Treat visible statuses and tool calls as product features.
+- Keep Vibe concise and use the public report for detail.
+- Make evidence links clickable and distinguish primary from secondary sources.
+- Explain confidence through source quality and limitations, not a theatrical percentage.
+- Emphasise that North supports investigation and information literacy rather than replacing journalists or professional fact-checkers.

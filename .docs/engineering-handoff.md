@@ -1,140 +1,123 @@
 # Engineering handoff
 
-This document records the decisions confirmed during the hackathon discovery interview. It is the reference for developers joining after the initial build.
+This document is the implementation reference for North’s persisted-investigation MVP.
 
 ## Goal and non-goal
 
-**Goal:** in Mistral Vibe, accept an X post URL and return a live, cited investigation that adds factual context and rhetorical context around the post.
+**Goal:** accept an X post URL in Mistral Vibe, run a live cited investigation, atomically save its structured result, and return a concise French conclusion linking to the detailed Nuxt report.
 
-**Non-goal:** determine or proclaim “the truth.” North must make uncertainty, competing perspectives, evidence quality, and missing information explicit.
+**Non-goal:** proclaim absolute truth. North exposes evidence quality, competing findings, uncertainty, missing context, and cautious rhetorical analysis.
 
-## Confirmed constraints
+## Confirmed boundaries
 
 | Area | Decision |
 | --- | --- |
-| Working name | North |
-| Team | Two engineers |
-| Deadline | A few hours; prioritise an end-to-end live experience |
-| Event criterion | Showcase Mistral Vibe through ambitious, creative, impactful use of agents, Skills, MCPs, and/or scheduled tasks |
-| Supported MVP input | An X post URL |
-| Accepted URL forms | `x.com/.../status/...` URLs, including tracking query parameters; normalise to the canonical URL before retrieval |
-| Demo language | French for the Vibe Skill, tool outputs, and final report |
-| Data mode | Fully live; do not use mock fallback data |
-| Orchestrator | Mistral Vibe agent |
-| Orchestration instruction | A Vibe Skill tells the agent how to plan, call MCP tools, assess evidence, and present the final report |
-| Integration model | North capabilities are exposed as MCP connector tools to Vibe |
-| Web stack | Nuxt, AI SDK, Nuxt MCP Toolkit, Cloudflare Workers/AI, and browser automation |
-| Follow-up | The Skill suggests a Mistral Vibe scheduled task; North does not operate a scheduler or notification system |
-| Persistence | No persistence in the MVP. A future website may store tool results in a database to visualise investigations. |
-| Product direction after event | Undecided |
+| Supported input | `x.com/.../status/...` URL, including tracking parameters |
+| Data mode | Live extraction and live sources only; no mock fallback |
+| Orchestration | Mistral Vibe follows `.skills/north-orchestrator.md` |
+| Integration | North capabilities are MCP connector tools |
+| Vibe output | French, at most three bullets; detailed content stays out of chat |
+| Persistence | Every successfully completed investigation must be saved before the final response |
+| Detailed rendering | Existing Nuxt public route `/reports/:id`, backed by its API and structured database records |
+| Public identifier | Generated UUID stored as `reports.id` and used by the route |
+| Follow-up | Optional persisted suggestion; Vibe may offer scheduling, but North runs no scheduler |
 
 ## System boundary
 
 ```mermaid
 flowchart LR
     U[User in Mistral Vibe] --> V[Vibe agent]
-    K[North Vibe Skill] --> V
-    V --> M[North MCP connector]
-    M --> X[Browser-extraction MCP / Cloudflare Worker]
-    M --> W[Live web and news search]
-    M --> I[Institutional-source search]
-    V --> R[Contextualised report in Vibe]
-    V -. suggests .-> S[Mistral Vibe scheduled task]
+    K[North orchestrator Skill] --> V
+    V --> M[North MCP surface]
+    M --> X[Browser worker]
+    M --> W[Live web/news search]
+    M --> I[Institutional search]
+    M --> A[Rhetorical analysis]
+    V --> SAVE[save_investigation]
+    SAVE --> DB[(NuxtHub SQLite)]
+    DB --> API[/api/reports/:id]
+    API --> PAGE[/reports/:id]
+    SAVE --> V
+    V --> C[Concise conclusion and saved URL]
 ```
 
 ### Responsibilities
 
-- **Vibe Skill:** defines the investigation playbook, routes work to tools, requires citations and uncertainty, and suggests a follow-up task when appropriate.
-- **Vibe agent:** orchestrates tool calls, evaluates their outputs, and writes the report.
-- **North MCP connector:** exposes the investigation capabilities Vibe needs.
-- **Browser-extraction MCP:** exposes `get_url_context`, a generically named URL-context capability designed to support multiple web sources over time. In the MVP, its browser worker supports X post URLs only and returns X-specific structured metadata through browser automation.
-- **Nuxt application (future companion UI):** may visualise saved investigation traces and evidence graphs. It is not required for the Vibe-first MVP.
+- **Orchestrator Skill:** controls sequence, evidence policy, retries, status messages, complete payload synthesis, and final response shape.
+- **Vibe agent:** executes the Skill and passes only retrieved facts into the save payload.
+- **Research tools:** retrieve or analyse live context; they do not own report persistence.
+- **`save_investigation`:** validates nested domain concepts and cross-references, generates all internal IDs, maps to existing tables, commits one transaction, and derives the public URL from runtime request/application configuration.
+- **Nuxt report API and repository:** load the persisted aggregate by UUID.
+- **Nuxt report page:** renders the complete stored investigation without chat history or MCP logs.
 
-## Proposed MCP surface
+## Implemented MCP surface
 
-Tool names are provisional. Build the highest-value path first; the tool surface may grow if time permits.
+| Tool | Purpose | Behavior |
+| --- | --- | --- |
+| `get_url_context` | Extract a supported X post through the browser worker | Read-only, open-world; returns canonical URL, post/author/date context, Community Note URL, video URLs, and transcription state. |
+| `search_web_news` | Find live web/news evidence and context | Read-only but non-idempotent due to live search. |
+| `search_institutional_evidence` | Search official French institutional domains | Read-only but non-idempotent; returns relevance and stance where available. |
+| `analyse_rhetoric` | Analyse framing in extracted content | Read-only and non-idempotent; does not decide factual truth. |
+| `save_investigation` | Persist a complete structured investigation | Write, non-destructive, non-idempotent; creates a fresh report on each successful call. |
 
-| Priority | Tool | Input | Required output |
-| --- | --- | --- | --- |
-| P0 | `get_url_context` | Public HTTP(S) URL; X post URLs only in the MVP | Rendered page context plus source-specific structured metadata. For the current X implementation: canonical URL, author, publication time, post text, engagement metrics when available, Community Note URL when detected, video URLs, rendered Markdown context, and any available video transcription or transcription error. The generic name reserves this interface for future URL types. |
-| P0 | `search_web_news` | Query, date range, optional preferred domains | Source title, publisher, URL, publication time, excerpt, relevance, and retrieval timestamp |
-| P0 | `search_institutional_evidence` | Claim, subject, jurisdiction | Official-source citations, supporting or contradicting excerpts, source URL, and retrieval timestamp |
-| P0 | `analyse_rhetoric` | Original text plus evidence summary | Emotional framing, certainty-versus-evidence mismatch, omissions, fallacies, framing, and cautious explanation |
-| P1 | `build_origin_timeline` | Extracted post and discovered sources | Chronological events, source relationships, confidence, and unknown links |
-| P1 | `build_evidence_graph` | Structured findings from other tools | Supports, contradicts, unverified items, source quality, and independence notes |
-| P1 | `get_investigation_status` | Correlation ID | Tool progress and explicit errors for a future visualisation UI |
+## Save contract and database mapping
 
-The extractor must reject unsupported links with a clear French error message. It should remove tracking query parameters before storing or displaying a canonical post URL.
+The tool accepts one strict `investigation` object. Nullable singleton values are explicit `null`; repeated sections are explicit arrays, including empty arrays. Caller-supplied database IDs are not accepted.
 
-## Evidence policy
+| Domain section | Persistence target |
+| --- | --- |
+| Report title, language, publication date, rhetoric disclaimer | `reports` |
+| Received claim and speaker metadata | `report_claims` |
+| Verifiable components and interpretations | `report_claim_items` |
+| Nuanced verdict and contextual summary | `report_conclusions` |
+| Submitted/canonical origin URL and additional classified sources | `report_sources` |
+| Confidence reasons and limitations | `report_confidence_items` |
+| Supporting, contradicting, and unverified findings | `report_evidence_items` |
+| Dated events and undated gaps | `report_timeline_items` |
+| Missing context | `report_context_items` |
+| Rhetorical findings | `report_rhetoric_items` |
+| Evidence that could change the conclusion | `report_change_factors` |
+| Optional follow-up suggestion | `report_follow_ups` |
+| Source links for confidence, evidence, timeline, context, and rhetoric findings | `report_citations` |
 
-1. Prefer primary sources whenever available.
-2. For French public-policy claims, search Légifrance, INSEE, data.gouv.fr, Vie-publique, Assemblée nationale, and Sénat.
-3. Expand by subject and jurisdiction to sources such as EUR-Lex, WHO, NASA, World Bank, U.S. SEC, and Companies House.
-4. Use reputable journalism, including *Le Monde*, as contextual secondary reporting, not as a substitute for a primary source.
-5. Always return clickable citations and distinguish primary, institutional, and secondary sources.
-6. Do not treat repeated coverage as independent confirmation. Record when sources share a common origin.
-7. Disclose that the submitted URL and extracted post content may be sent to the browser, search, AI, and other third-party services used to perform the investigation.
+Source citations are supplied as source URLs, validated against the investigation’s source set, then resolved to generated source IDs inside the transaction. Source URLs must be unique per report, matching the database constraint. Event dates use ISO `YYYY-MM-DD`; chronology gaps require `null`. The tool returns exactly an absolute `url` and UUID `public_id`, and only after commit succeeds.
 
-## Report contract
+The schema has no dedicated storage for an investigation plan, raw research log, source independence graph, retrieval timestamps, engagement metrics, transcripts, standalone manipulation score, or citations on conclusions/change factors. These are not overloaded into unrelated columns and are not part of the save contract.
 
-Every completed Vibe response should follow this structure:
+## Public report contract
 
-1. **Claim received**: quote or accurately paraphrase the X post.
-2. **Contextualised conclusion**: a nuanced label such as Highly supported, Weak evidence, Conflicting reports, Too early to conclude, Likely satire, or Original source unavailable.
-3. **Confidence and why**: evidence-based explanation, never an unexplained percentage.
-4. **Evidence for and against**: separate supported, contradicted, and unverified points.
-5. **Origin and timeline**: the post’s known source chain; explicitly flag gaps.
-6. **Missing context**: legal scope, dates, exceptions, methodology, baseline, or other qualifiers that change interpretation.
-7. **Rhetorical analysis**: framing, omissions, emotional language, and certainty calibration. This is not a truth score.
-8. **Citations**: source links with labels.
-9. **What would change this conclusion**: concrete evidence that would shift confidence.
-10. **Follow-up suggestion**: when the claim is developing or uncertain, invite the user to create a Vibe scheduled task.
+The detailed report is stored and rendered by the Nuxt application. It contains:
 
-## Safety and quality rules
+1. received claim, author metadata, verifiable components, and interpretations;
+2. nuanced conclusion;
+3. confidence reasons and limitations;
+4. supporting, contradicting, and unverified evidence;
+5. origin/chronology and explicit gaps;
+6. missing context;
+7. rhetoric analysis and optional disclaimer;
+8. primary and secondary sources with citations;
+9. evidence that could change the conclusion;
+10. optional follow-up suggestion.
 
-- Never present North as an authority that decides truth.
-- Do not infer facts beyond the retrieved evidence or fabricate citations.
-- Make source limitations, disagreement, and failures visible.
-- Avoid amplifying unverified allegations, especially about identifiable people. Describe them as unverified and seek primary evidence.
-- For political, legal, health, and scientific claims, distinguish reporting from evidence and include scope, timing, and uncertainty.
-- Rhetorical analysis must critique the wording and framing, not attack the speaker or infer intent.
-- If extraction, search, or citation retrieval fails, return a helpful error state identifying what failed and what the user can provide next.
-- If the post is available but reliable external evidence is not, return a French **preuves insuffisantes** report. It may provide carefully labelled rhetorical analysis, but must not imply a factual conclusion.
+Vibe does not reproduce this report. On success it gives a cautious label, one decisive contextual finding with one clickable evidence source, and exactly one **Consulter l’enquête complète** link returned by the save tool.
 
-## Media extraction note
+## Acceptance criteria
 
-The primary demo post is labelled as a video by X and the surrounding page text refers to it as a video. However, the captured post content currently provides only a JPEG preview image and a `00:00` media indicator, not a playable video stream or video-asset URL. Treat the post as **video-indicated, with no retrievable video asset** unless the extractor obtains an explicit media URL during a live run.
-
-The extractor should keep these states distinct in its output:
-
-- `media_type_hint`: the platform's indicated media type, such as `video`;
-- `media_preview_url`: a thumbnail or still image, when available;
-- `media_asset_url`: a playable or downloadable asset URL, only when actually retrieved;
-- `media_extraction_status`: whether the actual media asset was retrieved, unavailable, or failed to extract.
-
-## Primary demo acceptance criteria
-
-Use this live X post: <https://x.com/BFMTV/status/2070421512050364493?s=20>.
-
-The post quotes French Minister Monique Barbut expressing concern that widespread air-conditioning is only an emergency measure and will not prevent forest fires or animal deaths. X displays a Community Note that adds an important public-health perspective: air conditioning can prevent premature heat-related deaths, particularly where heat risk is high.
-
-The demo succeeds only if it:
-
-- accepts and extracts the X URL live;
-- visibly shows Vibe calling North’s MCP tools;
-- identifies that climate adaptation and heat-health protection are related but distinct considerations;
-- presents the Community Note and external sources as context, not an automatic refutation;
-- cites live sources and separates sourced evidence from interpretation;
-- avoids an absolute verdict about the minister’s statement;
-- surfaces a clear error state if a live dependency fails;
-- suggests a Vibe scheduled task only if the investigation identifies a developing question worth revisiting.
+- Unsupported URLs or extraction failures do not trigger research persistence.
+- Status messages remain brief, useful, and non-conclusive.
+- Research uses live sources and never falls back to example content.
+- `save_investigation` is called before every successful final response.
+- Malformed dates, URLs, enums, chronology states, duplicate sources, and unknown citation URLs are rejected before writes.
+- A valid call creates every supplied related record atomically and the existing API can load it.
+- A related-record failure rolls back the report row and all preceding inserts.
+- The returned URL is absolute, uses the generated public UUID, and points to `/reports/:id`.
+- A successful Vibe response has at most three bullets and exactly one full-report link.
+- A failed save is disclosed concisely and produces no report link.
 
 ## Deferred work
 
-- A database for tool-call traces, investigation history, and source results.
-- A Nuxt companion website for an Origin Map, evidence graph, and investigation visualisation.
-- Media, video, PDF, and plain-text inputs.
-- Image/video authenticity and reverse-origin analysis.
-- Autonomous follow-up execution outside Mistral Vibe.
-- Dedicated scientific and perspective agents.
+- Raw tool-trace persistence, source snapshots, and audit/version history.
+- Authentication, report ownership, moderation, retention, and deletion.
+- Rich Origin Map and evidence graph UI.
+- Additional URL/media input types and media-authenticity analysis.
+- Autonomous scheduled follow-up execution and notifications.

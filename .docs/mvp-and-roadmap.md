@@ -2,79 +2,63 @@
 
 ## One-day hackathon MVP
 
-Build the smallest experience that proves the story:
+The smallest complete experience is:
 
-1. Paste an X post URL into Mistral Vibe.
-2. Display live Vibe tool calls as the multi-agent investigation progresses.
-3. Reconstruct a basic origin timeline.
-4. Identify missing context and rhetorical framing.
-5. Present a final, cited evidence report with uncertainty.
+1. paste a supported X post URL into Mistral Vibe;
+2. display brief live investigation statuses and MCP calls;
+3. extract the post and investigate it with live web, news, institutional, and rhetorical-analysis tools;
+4. synthesise a complete structured investigation;
+5. persist the full investigation atomically;
+6. show no more than three French bullets in Vibe: a nuanced conclusion, one decisive cited finding, and the returned public-report link;
+7. open the detailed investigation in the companion Nuxt application.
 
-The goal is not broad fact-checking coverage. It is a memorable, transparent investigation experience.
+The goal is not broad fact-checking coverage. It is a memorable, transparent investigation experience with a durable evidence trail.
 
-## Must-have demo capabilities
+## Must-have capabilities
 
-| Capability | Why it matters |
+| Capability | Acceptance signal |
 | --- | --- |
-| X post submission | Establishes the focused “paste an X link” interaction. |
-| Planner orchestration | Makes the Mistral-agent architecture clear to the jury. |
-| Source timeline / Origin Map | Strong visual proof of the investigation. |
-| Institutional evidence lookup | Grounds the demo in trustworthy, official material. |
-| Missing-context analysis | Differentiates the product from a simple verdict. |
-| Rhetorical analysis | Shows that truth and honest presentation are separate. |
-| Evidence report with citations | Builds trust and makes the final result actionable. |
-| “What would change my mind?” | Demonstrates reasoning about uncertainty and missing evidence. |
+| X post submission | Supported URLs are extracted live; unsupported or failed extraction does not create a report. |
+| Visible orchestration | Brief, relevant statuses expose the investigation without leaking premature conclusions. |
+| Live evidence research | Web/news and institutional sources are queried without mock fallback data. |
+| Missing context and rhetoric | The report distinguishes factual evidence from presentation analysis. |
+| Structured persistence | `save_investigation` writes the complete aggregate in one transaction and returns a real public URL. |
+| Public detailed report | The existing Nuxt page reconstructs the investigation from the database alone. |
+| Concise Vibe result | At most three bullets, one decisive source citation, and exactly one full-report link on success. |
+| Transparent uncertainty | Confidence reasons, limitations, unverified evidence, and change factors remain visible in the report. |
 
-## Features to prioritise visually
+## Demo priorities
 
-### Origin Map
+### Live investigation
 
-Visualise how a claim propagates through accounts, platforms, media, and public figures, with timestamps. This is the clearest candidate for a memorable “wow” moment.
+Use short status messages such as:
 
-### Evidence Graph
+- Recherche de la publication d’origine et de la chronologie
+- Vérification auprès de sources institutionnelles
+- Comparaison des sources indépendantes
+- Recherche du contexte manquant
+- Analyse du cadrage et des incertitudes
+- Enregistrement de l’enquête détaillée
 
-Show the claim at the centre, then group evidence into **supports**, **contradicts**, and **unverified**. Make institutional sources visibly distinct.
+The statuses are part of the Mistral Vibe demonstration, not merely a loading screen.
 
-### Live Investigation
+### Durable evidence report
 
-Show status cards such as:
+The public page is the detailed experience. It displays the received claim, contextualised conclusion, confidence reasons, supporting/contradicting/unverified evidence, timeline and gaps, missing context, rhetorical analysis, classified sources, change factors, and optional follow-up.
 
-- Searching official statements
-- Finding the original publication
-- Comparing independent sources
-- Checking historical precedents
-- Detecting missing context
-- Analysing persuasive language
-- Building the evidence graph
+### Failure behavior
 
-The progress view is part of the product, not merely a loading screen.
+- Extraction failure: provide a helpful French error and do not save.
+- Save validation failure: repair the structured payload once without repeating research.
+- Persistence failure: provide a concise result, disclose that the detailed report was not saved, and omit a report link.
+- Live dependency failure: never substitute mock evidence or a fallback URL.
 
-### Transparent confidence
+## Deferred work
 
-Do not display only “Confidence: 84%.” Explain it with concrete reasons, for example:
-
-- seven independent sources agree;
-- an official statement confirms the timeline;
-- the original video was located;
-- publication timestamps match.
-
-## Stretch goals
-
-Prioritise these only after the core experience works end to end:
-
-| Feature | Demonstration value |
-| --- | --- |
-| Time Machine | Shows what was known at one hour, twelve hours, one day, and three days after a breaking event. |
-| “Would this fool me?” score | Estimates how convincing misleading content appears based on professional design, official-looking wording, genuine media, copied sources, and emotion. |
-| Follow-up investigation | The Vibe Skill suggests a Mistral Vibe scheduled task for an uncertain or developing claim. Vibe owns execution and notifications. |
-| Image and video analysis | Extends the same investigation flow to media. |
-| Perspective cards | Adds journalist, scientist, lawyer, economist, or historian context. |
-
-## Scope guardrails
-
-- Do not claim absolute truth or replace professional journalists and fact-checkers.
-- Keep citations visible and distinguish primary from secondary sources.
-- Treat confidence as an explanation of evidence quality, not a model certainty illusion.
-- Limit the visible agent count and keep each responsibility easy to explain in one sentence.
-- Prefer one polished investigation scenario over several shallow features.
-- Use live sources only for the demo. Present a clear error state rather than silently falling back to mocked data.
+- Investigation history, discovery, ownership, access control, and deletion workflows.
+- Storage of raw tool-call traces and research snapshots beyond the structured public report.
+- Rich Origin Map and evidence-graph visualisations beyond the current report UI.
+- Inputs beyond X posts, including general web pages, PDFs, images, and plain text.
+- Image/video authenticity and reverse-origin analysis.
+- Autonomous follow-up execution and notifications outside Mistral Vibe.
+- Dedicated scientific, legal, financial, and perspective research tools.
