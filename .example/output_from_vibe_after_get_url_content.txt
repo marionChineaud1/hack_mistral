@@ -1,0 +1,52 @@
+Plan d’enquête pour le post X de BFMTV (26 juin 2026)
+Affirmation extraite :
+« "Je suis horrifiée par les gens qui me disent qu'il n'y a qu'à mettre la clim' partout (...) Vous croyez que ça va éviter un feu de forêt, la mort des animaux ? ça n'est pas de l'adaptation, c'est une mesure d'urgence", déclare la ministre Monique Barbut. »
+
+Étapes prioritaires :
+
+
+Vérification de l’attribution :
+
+Confirmer que Monique Barbut a bien tenu ces propos, et dans quel contexte (interview, conférence, etc.).
+Identifier son poste actuel (ministre de quel ministère ?) et son lien avec le sujet (climat, énergie, santé).
+
+
+Contexte de la déclaration :
+
+Rechercher des sources primaires (vidéo complète, article de BFMTV ou autre média) pour comprendre le cadre : s’agit-il d’une réaction à un événement spécifique (canicule, incendie) ou d’une prise de position générale ?
+
+
+Analyse des éléments factuels :
+
+Climatisation et feux de forêt : Existe-t-il des études ou déclarations institutionnelles sur l’impact de la climatisation sur les risques d’incendie ou la mortalité animale ?
+Climatisation et santé humaine : Vérifier les données citées dans la Community Note (ex. Our World in Data, Le Parisien) sur la réduction des décès liés à la chaleur.
+
+
+Origine et propagation :
+
+Retracer la première publication de cette déclaration (BFMTV est-il la source originale ?).
+Analyser les réactions (ex. critiques de @GGCadoudal, @VLautard) pour identifier les arguments opposés (ex. : climatisation comme solution de santé publique).
+
+
+Cadrage rhétorique :
+
+Évaluer le ton (« horrifiée », « mesure d’urgence vs adaptation ») et les omissions éventuelles (ex. : alternatives à la climatisation, données scientifiques contradictoires).
+
+
+Recherches à lancer :
+
+Source primaire : Recherche de la vidéo complète ou de l’article source sur BFMTV ou d’autres médias (ex. : « Monique Barbut climatisation feu de forêt site:bfmtv.com »).
+Contexte institutionnel :
+
+Vérifier si Monique Barbut est bien ministre en juin 2026 (source : Gouvernement.fr).
+Rechercher des rapports officiels sur la climatisation et les feux de forêt (ex. : ONF, Météo-France, IPCC).
+
+Données santé : Confirmer les statistiques sur la mortalité liée à la chaleur à Paris (sources : Santé Publique France, INSEE).
+Community Note : Analyser les sources citées (Our World in Data, Le Parisien) pour évaluer leur pertinence.
+
+Prochaine action :
+Je lance les recherches pour :
+
+La source primaire de la déclaration (BFMTV ou autre).
+Les données institutionnelles sur la climatisation et ses impacts (feux de forêt, santé).
+Le contexte politique (rôle de Monique Barbut).

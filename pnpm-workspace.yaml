@@ -7,3 +7,5 @@ allowBuilds:
 packages:
   - '.'
   - '.browser'
+
+ignore-workspace-root-check: true

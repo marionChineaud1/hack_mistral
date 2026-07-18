@@ -1,0 +1,8 @@
+# Mistral key used to structure rendered X post Markdown.
+MISTRAL_API_KEY=
+
+# Public URL of the Nuxt POST /api/transcribe endpoint.
+NITRO_TRANSCRIPTION_URL=
+
+# Must match NUXT_TRANSCRIPTION_TOKEN in the Nuxt environment.
+NITRO_TRANSCRIPTION_TOKEN=

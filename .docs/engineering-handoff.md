@@ -47,7 +47,7 @@ flowchart LR
 - **Vibe Skill:** defines the investigation playbook, routes work to tools, requires citations and uncertainty, and suggests a follow-up task when appropriate.
 - **Vibe agent:** orchestrates tool calls, evaluates their outputs, and writes the report.
 - **North MCP connector:** exposes the investigation capabilities Vibe needs.
-- **Browser-extraction MCP:** obtains the X post’s content and useful metadata from the provided URL through browser automation.
+- **Browser-extraction MCP:** exposes `get_url_context`, a generically named URL-context capability designed to support multiple web sources over time. In the MVP, its browser worker supports X post URLs only and returns X-specific structured metadata through browser automation.
 - **Nuxt application (future companion UI):** may visualise saved investigation traces and evidence graphs. It is not required for the Vibe-first MVP.
 
 ## Proposed MCP surface
@@ -56,7 +56,7 @@ Tool names are provisional. Build the highest-value path first; the tool surface
 
 | Priority | Tool | Input | Required output |
 | --- | --- | --- | --- |
-| P0 | `extract_x_post` | X post URL | Canonical URL, author, publication time, post text, media URLs or descriptions when available, quoted/replied-to post references, extraction timestamp, and extraction error if any |
+| P0 | `get_url_context` | Public HTTP(S) URL; X post URLs only in the MVP | Rendered page context plus source-specific structured metadata. For the current X implementation: canonical URL, author, publication time, post text, engagement metrics when available, Community Note URL when detected, video URLs, rendered Markdown context, and any available video transcription or transcription error. The generic name reserves this interface for future URL types. |
 | P0 | `search_web_news` | Query, date range, optional preferred domains | Source title, publisher, URL, publication time, excerpt, relevance, and retrieval timestamp |
 | P0 | `search_institutional_evidence` | Claim, subject, jurisdiction | Official-source citations, supporting or contradicting excerpts, source URL, and retrieval timestamp |
 | P0 | `analyse_rhetoric` | Original text plus evidence summary | Emotional framing, certainty-versus-evidence mismatch, omissions, fallacies, framing, and cautious explanation |
