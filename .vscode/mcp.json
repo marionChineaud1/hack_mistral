@@ -1,0 +1,17 @@
+{
+	"servers": {
+		"cloudflare": {
+			"url": "https://mcp.cloudflare.com/mcp",
+			"type": "http"
+		},
+			"cloudflare-docs": {
+			"url": "https://docs.mcp.cloudflare.com/mcp",
+			"type": "http"
+		},
+			"cloudflare-bindings": {
+			"url": "https://bindings.mcp.cloudflare.com/mcp",
+			"type": "http"
+		},
+	},
+	"inputs": []
+}
