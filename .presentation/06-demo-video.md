@@ -26,14 +26,14 @@ This keeps the video credible because it shows the real product, while avoiding 
 | Time | Screen recording | On-screen caption | Voice-over |
 | --- | --- | --- | --- |
 | 0:00–0:06 | Vera title card, then Mistral Vibe with the X URL ready. | **Vera, investigate before you share** | “Viral claims often arrive before the context needed to understand them.” |
-| 0:06–0:14 | Paste the X post URL and start the investigation. | **A post becomes an investigation** | “With Vera, one X post launches a transparent investigation.” |
+| 0:06–0:14 | Paste the X post URL and start the investigation. | **One link. No expertise required.** | “With Vera in Mistral Vibe, anyone can turn one X post into a transparent investigation.” |
 | 0:14–0:28 | Show Vibe statuses and the corresponding MCP tool activity. | **Origin · institutional evidence · context · rhetoric** | “In Mistral Vibe, Vera makes its process visible: it traces the origin, checks institutional evidence, recovers missing context, and analyses framing.” |
 | 0:28–0:40 | Show the architecture slide or a clean animated version of the diagram. | **Vibe orchestrates. MCP connects. Vera preserves.** | “The Vibe Skill is the playbook. It orchestrates MCP tools for live research, then sends a complete structured investigation to persistence.” |
 | 0:40–0:48 | Show the `save_investigation` step or the visible status: *Enregistrement de l’enquête détaillée*. | **Structured evidence, saved atomically** | “The investigation is saved with its sources, evidence, limitations, and citations, not left inside a chat.” |
 | 0:48–0:58 | Show the concise Vibe response and click **Consulter l’enquête complète**. | **A concise, cautious conclusion** | “Vibe stays concise: a nuanced conclusion, one decisive source, and a link to the complete report.” |
 | 0:58–1:15 | Reveal the report’s claim, verdict, explanation, and key limitation. | **What we know. What is missing.** | “The report separates the claim from the evidence. In this example, the statement is partly supported, but it omits important context about heat-related mortality.” |
 | 1:15–1:24 | Scroll through sources, supporting versus qualifying evidence, and rhetoric analysis. | **Evidence, uncertainty, and framing** | “Readers can inspect primary and secondary sources, supporting and contradictory evidence, missing context, and the language that shapes the message.” |
-| 1:24–1:30 | Show *What could change this reading* and end on the Vera brand. | **Evidence, not authority** | “Vera does not decide the truth. It shows the work needed to reach a responsible conclusion.” |
+| 1:24–1:30 | Show *What could change this reading* and end on the Vera brand. | **From posts to every format** | “Today, Vera starts with X posts. Tomorrow, the same investigation layer can cover articles, PDFs, images, and video.” |
 
 ## Recording the report
 
@@ -68,4 +68,4 @@ For a short submission teaser, retain only:
 
 ## Final voice-over script
 
-“Viral claims often arrive before the context needed to understand them. Vera turns an X post into a transparent investigation. In Mistral Vibe, its specialised workflow traces the origin, checks live institutional evidence, recovers missing context, and analyses framing. MCP tools connect that workflow to live research, while the completed investigation is saved as structured, citable evidence. Vibe returns a concise conclusion and a link to the full report, where readers can inspect the sources, limitations, and what could change the conclusion. Vera does not decide the truth. It shows the work needed to reach a responsible conclusion.”
+“Information moves at feed speed. Verification does not. Vera is the investigation layer for online information. In Mistral Vibe, anyone can start with a single X post, without technical setup or specialised prompting. Vera then traces the origin, checks live institutional evidence, recovers missing context, and analyses framing. MCP tools connect that workflow to live research, while the completed investigation is saved as structured, citable evidence. Vibe returns a concise conclusion and a link to the full report, where readers can inspect the sources, limitations, and what could change the conclusion. Today, we start with X posts. Next, the same pipeline expands to web pages, PDFs, images, and video. Vera does not decide the truth. It gives people the evidence they need to decide responsibly.”

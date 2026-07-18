@@ -37,3 +37,13 @@ Vera is an AI investigative assistant. It does not decide what people should thi
 ## Demo video
 
 Use [06-demo-video.md](./06-demo-video.md) for a 90-second hybrid recording plan, shot list, on-screen captions, and final voice-over script.
+
+Use [09-demo-video-script.md](./09-demo-video-script.md) for the complete time-coded narration script to record.
+
+## Startup jury pitch
+
+Use [07-jury-pitch.md](./07-jury-pitch.md) for the startup-oriented two-minute speech, product vision, roadmap, and likely jury answers.
+
+## Quick memory aid
+
+Use [08-jury-cheat-sheet.md](./08-jury-cheat-sheet.md) for the short, easy-to-remember jury talking points.

@@ -38,6 +38,8 @@ flowchart LR
 
 “We use Mistral Vibe as the live interface. The user pastes an X post URL, sees short investigation statuses as Vera works, and receives a concise French conclusion with one decisive source and one report link.
 
+Because this happens in Mistral Vibe, the experience is accessible without technical expertise. Users do not need to configure tools, understand research workflows, or write specialised prompts. They simply bring the claim they want to understand.
+
 Behind that interface, the Vera Skill is the investigative playbook. It decides the sequence, evidence policy, tool calls, statuses, and final response shape.
 
 But a Skill alone is ephemeral and conversation-bound. Vera needs live retrieval to investigate the current world, structured persistence to preserve citations and uncertainty, and a public report that can be inspected independently of the Vibe conversation.
