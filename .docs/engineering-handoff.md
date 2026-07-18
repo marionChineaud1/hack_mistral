@@ -102,6 +102,17 @@ Every completed Vibe response should follow this structure:
 - If extraction, search, or citation retrieval fails, return a helpful error state identifying what failed and what the user can provide next.
 - If the post is available but reliable external evidence is not, return a French **preuves insuffisantes** report. It may provide carefully labelled rhetorical analysis, but must not imply a factual conclusion.
 
+## Media extraction note
+
+The primary demo post is labelled as a video by X and the surrounding page text refers to it as a video. However, the captured post content currently provides only a JPEG preview image and a `00:00` media indicator, not a playable video stream or video-asset URL. Treat the post as **video-indicated, with no retrievable video asset** unless the extractor obtains an explicit media URL during a live run.
+
+The extractor should keep these states distinct in its output:
+
+- `media_type_hint`: the platform's indicated media type, such as `video`;
+- `media_preview_url`: a thumbnail or still image, when available;
+- `media_asset_url`: a playable or downloadable asset URL, only when actually retrieved;
+- `media_extraction_status`: whether the actual media asset was retrieved, unavailable, or failed to extract.
+
 ## Primary demo acceptance criteria
 
 Use this live X post: <https://x.com/BFMTV/status/2070421512050364493?s=20>.

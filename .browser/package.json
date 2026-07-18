@@ -2,14 +2,24 @@
   "name": "mistral-summer-hackathon",
   "version": "0.0.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "wrangler dev",
     "deploy": "wrangler deploy",
     "cf-typegen": "wrangler types",
-    "check": "tsc --noEmit"
+    "check": "tsc --noEmit",
+    "test": "vitest run"
   },
   "devDependencies": {
+    "@types/json-schema": "^7.0.15",
+    "@types/node": "^26.1.1",
     "typescript": "^5.8.3",
+    "vitest": "^4.1.10",
     "wrangler": "^4.25.0"
+  },
+  "dependencies": {
+    "@ai-sdk/mistral": "^4.0.12",
+    "ai": "^7.0.30",
+    "zod": "^4.4.3"
   }
 }
